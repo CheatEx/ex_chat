@@ -1,6 +1,10 @@
-/* This file is for your main application css. */
-@import "./phoenix.css";
-
+header section {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+  
 /* Alerts and form errors */
 .alert {
   padding: 15px;

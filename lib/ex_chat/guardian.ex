@@ -7,7 +7,7 @@ defmodule ExChat.Guardian do
   def subject_for_token(resource = %User{}, _claims) do
     {:ok, to_string(resource.id)}
   end
-  def subject_for_token(resource) do
+  def subject_for_token(_resource) do
     {:error, "Unknown resource type"}
   end
 

@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :ex_chat, ExChat.Repo,
@@ -17,6 +17,7 @@ config :ex_chat, ExChat.Repo,
 # with webpack to recompile .js and .css sources.
 config :ex_chat, ExChatWeb.Endpoint,
   http: [port: 4000],
+  secret_key_base: "yxqAIvaxIhJT4f99ilMq/0NPv9v+kDTtCLmKmnUOIlDY23jXHrYzlyIWoMYiIJt3",
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -29,6 +30,9 @@ config :ex_chat, ExChatWeb.Endpoint,
       cd: Path.expand("../assets", __DIR__)
     ]
   ]
+
+config :ex_chat, ExChat.Guardian,
+  secret_key: "8gEOoOqs/nw6Ebf1spmLFKpAhHqfHVIfzc3A1aZbaiaNAkTvK/TWyqyTyhQxGMuH"
 
 # ## SSL Support
 #

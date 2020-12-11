@@ -1,6 +1,4 @@
 defmodule ExChatWeb.Auth do
-  import Plug.Conn
-
   def login_with(conn, email, pass, opts) do
     repo = Keyword.fetch!(opts, :repo)
     user = repo.get_by(ExChat.User, email: email)

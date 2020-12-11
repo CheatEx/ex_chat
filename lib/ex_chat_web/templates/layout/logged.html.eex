@@ -1,6 +1,7 @@
 <%= if logged_in?(@conn) do %>
 
-	<%= link "#{current_user(@conn).email}", to: Routes.user_path(@conn, :show, current_user(@conn)) %>
+	<%= link "#{current_user(@conn).email}", to: Routes.user_path(@conn, :show, current_user(@conn)),
+		class: "btn btn-link" %>
 	<%= link "Sign Out", to: Routes.session_path(@conn, :delete, :access),
 		method: :delete, class: "btn btn-danger" %>
 

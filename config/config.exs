@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 config :ex_chat,
   ecto_repos: [ExChat.Repo]
@@ -13,7 +13,6 @@ config :ex_chat,
 # Configures the endpoint
 config :ex_chat, ExChatWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "yxqAIvaxIhJT4f99ilMq/0NPv9v+kDTtCLmKmnUOIlDY23jXHrYzlyIWoMYiIJt3",
   render_errors: [view: ExChatWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: ExChat.PubSub,
   live_view: [signing_salt: "TYP3/CgI"]
@@ -30,7 +29,6 @@ config :phoenix, :json_library, Jason
 # of this file so it overrides the configuration defined above.
 config :ex_chat, ExChat.Guardian,
   issuer: "ExChat",
-  secret_key: "8gEOoOqs/nw6Ebf1spmLFKpAhHqfHVIfzc3A1aZbaiaNAkTvK/TWyqyTyhQxGMuH",
   allowed_algos: ["HS512"], # optional
   verify_module: Guardian.JWT,  # optional
   ttl: { 30, :days },
