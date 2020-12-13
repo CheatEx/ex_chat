@@ -19,7 +19,7 @@ config :ex_chat, ExChat.Repo,
   show_sensitive_data_on_connection_error: true # XXX REMOVE
 
 config :ex_chat, ExChat.Guardian,
-  secret_key: "W/B6Qq7yzMhI3l1P+HtMXb1NwYNd2rxIVyqZmu4J22kJbodl3mkcQ4yzoz85rfCO"
+  secret_key: "W/B6Qq7yzMhI3l1P+HtMXb1NwYNd2rxIVyqZmu4J22kJbodl3mkcQ4yzoz85rfCO" # XXX REMOVE
 
 config :logger, level: :debug
 
