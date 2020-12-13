@@ -2,12 +2,8 @@ import Config
 
 # Configure your database
 config :ex_chat, ExChat.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "postgres",
-  hostname: "localhost",
+  url: "ecto://postgres:postgres@localhost/postgres",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -17,6 +13,7 @@ config :ex_chat, ExChat.Repo,
 # with webpack to recompile .js and .css sources.
 config :ex_chat, ExChatWeb.Endpoint,
   http: [port: 4000],
+  url: [host: "localhost", port: "4000"],
   secret_key_base: "yxqAIvaxIhJT4f99ilMq/0NPv9v+kDTtCLmKmnUOIlDY23jXHrYzlyIWoMYiIJt3",
   debug_errors: true,
   code_reloader: true,

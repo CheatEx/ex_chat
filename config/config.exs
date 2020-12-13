@@ -12,7 +12,6 @@ config :ex_chat,
 
 # Configures the endpoint
 config :ex_chat, ExChatWeb.Endpoint,
-  url: [host: "localhost"],
   render_errors: [view: ExChatWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: ExChat.PubSub,
   live_view: [signing_salt: "TYP3/CgI"]

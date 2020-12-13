@@ -11,7 +11,7 @@ RUN mix local.hex --force && \
     mix local.rebar --force
 
 # set build ENV
-ENV MIX_ENV=prod
+ARG MIX_ENV=prod
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
@@ -46,5 +46,12 @@ USER nobody:nobody
 COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/ex_chat ./
 
 ENV HOME=/app
+
+ENV DATABASE_URL="ecto://postgres:postgres@ex_chat-pg/postgres" \
+    SECRET_KEY_BASE="vlOM4w4Qmxb5AuTKGDVwsrXQlozxKPRQkaQaFX8waE17kJQYhBkgsPe6ohGWJx2G" \
+    JWT_SECRET_KEY="W/B6Qq7yzMhI3l1P+HtMXb1NwYNd2rxIVyqZmu4J22kJbodl3mkcQ4yzoz85rfCO" \
+    SERVER_PORT="4000" \
+    HTTP_HOST="localhost" \
+    HTTP_PORT="4000"
 
 CMD ["bin/ex_chat", "start"]
