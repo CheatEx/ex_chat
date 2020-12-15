@@ -8,7 +8,7 @@ WORKDIR /app
 RUN mix local.hex --force && \
     mix local.rebar --force
 
-ARG MIX_ENV=prod
+ARG MIX_ENV=docker
 
 COPY mix.exs mix.lock ./
 COPY config config
@@ -35,7 +35,7 @@ RUN chown nobody:nobody /app
 
 USER nobody:nobody
 
-COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/ex_chat ./
+COPY --from=build --chown=nobody:nobody /app/_build/docker/rel/ex_chat ./
 
 ENV HOME=/app
 

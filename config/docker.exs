@@ -6,21 +6,11 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :ex_chat, ExChatWeb.Endpoint,
-  http: [ # XXX REMOVE
-    port: 4000
-  ],
   server: true,
-  url: [host: "localhost", port: 4000], # XXX REMOVE
-  secret_key_base: "vlOM4w4Qmxb5AuTKGDVwsrXQlozxKPRQkaQaFX8waE17kJQYhBkgsPe6ohGWJx2G", # XXX REMOVE
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :ex_chat, ExChat.Repo,
-  url: "ecto://postgres:postgres@ex_chat-pg/postgres", # XXX REMOVE
-  pool_size: 10,
-  show_sensitive_data_on_connection_error: true # XXX REMOVE
-
-config :ex_chat, ExChat.Guardian,
-  secret_key: "W/B6Qq7yzMhI3l1P+HtMXb1NwYNd2rxIVyqZmu4J22kJbodl3mkcQ4yzoz85rfCO" # XXX REMOVE
+  pool_size: 10
 
 config :logger, level: :debug
 

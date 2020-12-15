@@ -1,10 +1,6 @@
 import Config
 
-raise """
-Fuck
-"""
-
-if (Mix.env() != :dev) do
+if (config_env() != :dev) do
   database_url = System.get_env("DATABASE_URL") ||
     raise """
     environment variable DATABASE_URL is missing.
