@@ -11,12 +11,12 @@ RUN mix local.hex --force && \
 ARG MIX_ENV=docker
 
 COPY mix.exs mix.lock ./
-COPY config config
 RUN mix do deps.get, deps.compile
 
 COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
+COPY config config
 COPY priv priv
 COPY assets assets
 RUN npm run --prefix ./assets deploy
@@ -42,8 +42,9 @@ ENV HOME=/app
 ENV DATABASE_URL="ecto://postgres:postgres@ex_chat-pg/postgres" \
     SECRET_KEY_BASE="vlOM4w4Qmxb5AuTKGDVwsrXQlozxKPRQkaQaFX8waE17kJQYhBkgsPe6ohGWJx2G" \
     JWT_SECRET_KEY="W/B6Qq7yzMhI3l1P+HtMXb1NwYNd2rxIVyqZmu4J22kJbodl3mkcQ4yzoz85rfCO" \
-    SERVER_PORT="4000" \
+    PORT="4000" \
+    HTTP_SCHEME="http" \
     HTTP_HOST="localhost" \
     HTTP_PORT="4000"
 
-CMD ["bin/ex_chat", "start"]
+CMD bin/ex_chat eval "ExChat.Migrations.migrate" && bin/ex_chat start

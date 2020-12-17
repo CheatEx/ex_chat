@@ -19,9 +19,9 @@ if (config_env() != :dev) do
     You can generate one by calling: mix guardian.gen.secret
     """
 
-  server_port = System.get_env("SERVER_PORT") ||
+  port = System.get_env("PORT") ||
     raise """
-    environment variable SERVER_PORT is missing.
+    environment variable PORT is missing.
     """
 
   http_host = System.get_env("HTTP_HOST") ||
@@ -29,9 +29,11 @@ if (config_env() != :dev) do
     environment variable HTTP_HOST is missing.
     """
 
-  http_port = System.get_env("HTTP_PORT") ||
+  http_port = System.get_env("HTTP_PORT")
+
+  http_scheme = System.get_env("HTTP_SCHEME") ||
     raise """
-    environment variable HTTP_PORT is missing.
+    environment variable HTTP_SCHEME is missing.
     """
 
   config :ex_chat, ExChat.Repo,
@@ -39,10 +41,10 @@ if (config_env() != :dev) do
 
   config :ex_chat, ExChatWeb.Endpoint,
     http: [
-      port: server_port,
+      port: port,
       transport_options: [socket_opts: [:inet6]]
     ],
-    url: [host: http_host, port: http_port],
+    url: [scheme: http_scheme, host: http_host, port: http_port],
     secret_key_base: secret_key_base
 
   config :ex_chat, ExChat.Guardian,
