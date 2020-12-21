@@ -76,7 +76,7 @@ defmodule ExChatWeb.UserController do
       user == ExChat.Guardian.Plug.current_resource(conn) ->
         Repo.delete!(user)
         conn
-        |> ExChat.Guardian.Plug.sign_out(conn)
+        |> ExChatWeb.Auth.logout()
         |> put_flash(:danger, "User deleted")
         |> redirect(to: Routes.session_path(conn, :new))
       :error ->

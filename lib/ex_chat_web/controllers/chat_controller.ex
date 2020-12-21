@@ -2,11 +2,9 @@ defmodule ExChatWeb.ChatController do
   use ExChatWeb, :controller
 
   def index(conn, _params) do
-    user = ExChat.Guardian.Plug.current_resource(conn)
-    token = case ExChat.Guardian.encode_and_sign(user) do
-      {:ok, token, _claims} -> token
-      {:error, _} -> nil
-    end
+    token = conn
+    |> ExChatWeb.Auth.current_user()
+    |> ExChatWeb.Auth.ws_token()
     render(conn, "index.html", token: token)
   end
 

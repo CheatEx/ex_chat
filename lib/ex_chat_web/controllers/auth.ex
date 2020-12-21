@@ -14,6 +14,17 @@ defmodule ExChatWeb.Auth do
     end
   end
 
+  def logout(conn), do: ExChat.Guardian.Plug.sign_out(conn)
+
+  def current_user(conn), do: ExChat.Guardian.Plug.current_resource(conn)
+
+  def ws_token(user) do
+    case ExChat.Guardian.encode_and_sign(user) do
+      {:ok, token, _claims} -> token
+      {:error, _} -> nil
+    end
+  end
+
   defp login(conn, user) do
     ExChat.Guardian.Plug.sign_in(conn, user)
   end

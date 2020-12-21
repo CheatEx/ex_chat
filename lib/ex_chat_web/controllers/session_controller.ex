@@ -7,10 +7,10 @@ defmodule ExChatWeb.SessionController do
     render(conn, "new.html")
   end
 
-  def create(conn, %{"session" => %{"email" => user, "password" => password}}) do
-    case login_with(conn, user, password, repo: ExChat.Repo) do
+  def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
+    case login_with(conn, email, password, repo: ExChat.Repo) do
       {:ok, conn} ->
-        logged_user = ExChat.Guardian.Plug.current_resource(conn)
+        logged_user = current_user(conn)
         conn
         |> put_flash(:info, "logged in as #{logged_user.email}")
         |> redirect(to: Routes.chat_path(conn, :index))
@@ -23,7 +23,7 @@ defmodule ExChatWeb.SessionController do
 
   def delete(conn, _) do
     conn
-    |> ExChat.Guardian.Plug.sign_out()
+    |> logout()
     |> redirect(to: "/")
   end
 end
