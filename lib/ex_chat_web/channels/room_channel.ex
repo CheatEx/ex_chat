@@ -8,18 +8,16 @@ defmodule ExChatWeb.RoomChannel do
   use ExChatWeb, :channel
 
   def join("room:lobby", _payload, socket) do
-    if GuardianSocket.authenticated?(socket) do
-      send(self(), :after_join)
-      {:ok, socket}
-    else
-      {:error, %{reason: "unauthorized"}}
-    end
+    send(self(), :after_join)
+    {:ok, socket}
   end
 
   def handle_info(:after_join, socket) do
-    user = GuardianSocket.current_resource(socket)
-    Presence.track(socket, user.email,
-      %{online_at: :os.system_time(:milli_seconds)})
+    if GuardianSocket.authenticated?(socket) do
+      Presence.track(socket, user_email(socket),
+        %{online_at: :os.system_time(:milli_seconds)})
+    end
+
     Repo.all(Message, limit: 20)
     |> Enum.each(fn msg -> push(socket, "message:new",
     %{
@@ -32,15 +30,17 @@ defmodule ExChatWeb.RoomChannel do
   end
 
   def handle_in("message:new", message, socket) do
-    %Message{}
-    |> Message.changeset(%{name: user_email(socket), message: message})
-    |> Repo.insert()
+    if GuardianSocket.authenticated?(socket) do
+      %Message{}
+      |> Message.changeset(%{name: user_email(socket), message: message})
+      |> Repo.insert()
 
-    broadcast!(socket, "message:new", %{
-      user: user_email(socket),
-      body: message,
-      timestamp: :os.system_time(:milli_seconds)
-    })
+      broadcast!(socket, "message:new", %{
+        user: user_email(socket),
+        body: message,
+        timestamp: :os.system_time(:milli_seconds)
+      })
+    end
     {:noreply, socket}
   end
 

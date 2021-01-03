@@ -1,10 +1,15 @@
 defmodule ExChatWeb.ChatController do
   use ExChatWeb, :controller
 
+  alias ExChat.User
+  alias ExChatWeb.Auth
+
   def index(conn, _params) do
-    token = conn
-    |> ExChatWeb.Auth.current_user()
-    |> ExChatWeb.Auth.ws_token()
+    token =
+      with user when not is_nil(user) <- Auth.current_user(conn) do
+        Auth.ws_token(user)
+      end
+
     render(conn, "index.html", token: token)
   end
 

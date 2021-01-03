@@ -34,13 +34,13 @@ defmodule ExChatWeb.Router do
     resources "/users", UserController, [:new, :create]
     resources "/sessions", SessionController, only: [:create, :delete, :new]
     get "/", ChatController, :redirect_index
+    resources "/chat", ChatController, [:index]
   end
 
   scope "/", ExChatWeb do
     pipe_through [:browser, :browser_auth]
 
     resources "/users", UserController, only: [:show, :index, :update]
-    resources "/chat", ChatController, [:index]
   end
 
   # Other scopes may use custom stacks.
