@@ -7,10 +7,13 @@ defmodule ExChatWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
     plug Guardian.Plug.Pipeline,
       module: ExChat.Guardian,
       error_handler: ExChatWeb.AuthController
+
     plug Guardian.Plug.VerifySession
+
     plug Guardian.Plug.LoadResource,
       allow_blank: true
   end
@@ -19,6 +22,7 @@ defmodule ExChatWeb.Router do
     plug Guardian.Plug.Pipeline,
       module: ExChat.Guardian,
       error_handler: ExChatWeb.AuthController
+
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource
     plug Guardian.Plug.EnsureAuthenticated

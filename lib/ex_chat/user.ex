@@ -29,6 +29,7 @@ defmodule ExChat.User do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: p}} ->
         put_change(changeset, :encrypt_pass, Argon2.hash_pwd_salt(p))
+
       _ ->
         changeset
     end

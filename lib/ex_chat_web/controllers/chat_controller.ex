@@ -1,7 +1,6 @@
 defmodule ExChatWeb.ChatController do
   use ExChatWeb, :controller
 
-  alias ExChat.User
   alias ExChatWeb.Auth
 
   def index(conn, _params) do
