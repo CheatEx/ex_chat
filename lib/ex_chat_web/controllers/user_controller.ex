@@ -10,9 +10,11 @@ defmodule ExChatWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
+
     cond do
       user == ExChat.Guardian.Plug.current_resource(conn) ->
         render(conn, "show.html", user: user)
+
       :error ->
         conn
         |> put_flash(:error, "No access")
@@ -27,11 +29,13 @@ defmodule ExChatWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     changeset = User.reg_changeset(%User{}, user_params)
+
     case Repo.insert(changeset) do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "User created successfully")
         |> redirect(to: Routes.user_path(conn, :index))
+
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -39,10 +43,12 @@ defmodule ExChatWeb.UserController do
 
   def edit(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
+
     cond do
       user == ExChat.Guardian.Plug.current_resource(conn) ->
         changeset = User.changeset(user)
         render(conn, "edit.html", user: user, changeset: changeset)
+
       :error ->
         conn
         |> put_flash(:error, "No access")
@@ -53,6 +59,7 @@ defmodule ExChatWeb.UserController do
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Repo.get!(User, id)
     changeset = User.reg_changeset(user, user_params)
+
     cond do
       user == ExChat.Guardian.Plug.current_resource(conn) ->
         case Repo.update(changeset) do
@@ -60,9 +67,11 @@ defmodule ExChatWeb.UserController do
             conn
             |> put_flash(:info, "User updated")
             |> redirect(to: Routes.user_path(conn, :show, user))
+
           {:error, changeset} ->
             render(conn, "edit.html", user: user, changeset: changeset)
         end
+
       :error ->
         conn
         |> put_flash(:error, "No access")
@@ -72,13 +81,16 @@ defmodule ExChatWeb.UserController do
 
   def delete(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
+
     cond do
       user == ExChat.Guardian.Plug.current_resource(conn) ->
         Repo.delete!(user)
+
         conn
         |> ExChatWeb.Auth.logout()
         |> put_flash(:danger, "User deleted")
         |> redirect(to: Routes.session_path(conn, :new))
+
       :error ->
         conn
         |> put_flash(:error, "No access")

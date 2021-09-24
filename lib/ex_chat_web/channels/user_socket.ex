@@ -13,6 +13,7 @@ defmodule ExChatWeb.UserSocket do
       {:error, _} -> :error
     end
   end
+
   @impl true
   def connect(_params, socket) do
     {:ok, socket}

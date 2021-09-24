@@ -25,7 +25,8 @@ in
 
 mkShell {
   buildInputs = basePackages ++ 
-                [ glibcLocales libnotify inotify-tools ];
+                [ glibcLocales libnotify inotify-tools ] ++
+                [ heroku kubectl];
   shellHooks = hooks;
 }
 

@@ -14,18 +14,19 @@ defmodule ExChatWeb.RoomChannel do
 
   def handle_info(:after_join, socket) do
     if GuardianSocket.authenticated?(socket) do
-      Presence.track(socket, user_email(socket),
-        %{online_at: :os.system_time(:milli_seconds)})
+      Presence.track(socket, user_email(socket), %{online_at: :os.system_time(:milli_seconds)})
     end
 
     Repo.all(Message, limit: 20)
-    |> Enum.each(fn msg -> push(socket, "message:new",
-    %{
-      user: msg.name,
-      body: msg.message,
-      timestamp: msg.updated_at
-    }) end)
-    push socket, "presence_state", Presence.list(socket)
+    |> Enum.each(fn msg ->
+      push(socket, "message:new", %{
+        user: msg.name,
+        body: msg.message,
+        timestamp: msg.updated_at
+      })
+    end)
+
+    push(socket, "presence_state", Presence.list(socket))
     {:noreply, socket}
   end
 
@@ -41,11 +42,11 @@ defmodule ExChatWeb.RoomChannel do
         timestamp: :os.system_time(:milli_seconds)
       })
     end
+
     {:noreply, socket}
   end
 
   defp user_email(socket) do
-     GuardianSocket.current_resource(socket).email
+    GuardianSocket.current_resource(socket).email
   end
-
 end

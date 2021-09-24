@@ -20,7 +20,7 @@ defmodule ExChat.MixProject do
   def application do
     [
       mod: {ExChat.Application, []},
-      extra_applications: [:logger, :runtime_tools, :observer]
+      extra_applications: [:ssl, :logger, :runtime_tools, :observer]
     ]
   end
 

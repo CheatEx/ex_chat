@@ -9,8 +9,7 @@ config :ex_chat, ExChatWeb.Endpoint,
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :ex_chat, ExChat.Repo,
-  pool_size: 10
+config :ex_chat, ExChat.Repo, pool_size: 10
 
 config :logger, level: :debug
 
