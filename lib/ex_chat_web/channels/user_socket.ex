@@ -5,9 +5,12 @@ defmodule ExChatWeb.UserSocket do
 
   ## Channels
   channel "room:*", ExChatWeb.RoomChannel
+  channel "area:*", ExChatWeb.TestChannel
 
   @impl true
   def connect(%{"token" => token}, socket) do
+    IO.puts("Socket.connect: #{socket.topic}")
+
     case GuardianSocket.authenticate(socket, ExChat.Guardian, token) do
       {:ok, authed_socket} -> {:ok, authed_socket}
       {:error, _} -> :error

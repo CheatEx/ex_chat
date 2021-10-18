@@ -8,6 +8,7 @@ let
     rebar
     rebar3
     nodejs
+    postgresql_13
   ];
   deployTools = [heroku kubectl];
   utilities = [glibcLocales libnotify inotify-tools];
