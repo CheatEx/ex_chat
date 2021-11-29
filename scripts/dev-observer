@@ -1,0 +1,3 @@
+#!/bin/bash
+
+elixir --sname observer --app observer --eval ":observer.start" --no-halt

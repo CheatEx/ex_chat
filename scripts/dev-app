@@ -1,0 +1,3 @@
+#!/bin/bash
+
+elixir --sname phx -S mix phx.server
